@@ -32,6 +32,9 @@ const LoginButton: React.FC = observer(() => {
   return <Button color="inherit" onClick={login} >Login</Button>
 })
 
+/**
+ * material uiで利用するスタイル
+ */
 const useStyles = makeStyles(theme => ({
   root: {
     flexGrow: 1,
