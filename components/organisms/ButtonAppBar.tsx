@@ -15,7 +15,22 @@ type LoginButtonProps = {
   displayName: string | null
 }
 
+
+/**
+ * ヘッダーに表示するログインボタン
+ * 
+ * @param props 
+ */
 const LoginButton: React.FC<LoginButtonProps> = (props: LoginButtonProps) => {
+
+  /**
+   * ログイン状態の変化を監視する
+   */
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged(user => {
+      store.authStore.setUser(user)
+    })
+  })
 
   const login = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -44,14 +59,11 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
+/**
+ * ヘッダーに常に表示するAppBar
+ */
 const ButtonAppBar = observer(() => {
   const classes = useStyles();
-
-  useEffect(()=>{
-    firebase.auth().onAuthStateChanged(user => {
-      store.authStore.setUser(user)
-    })
-  })
 
   return (
     <div className={classes.root}>
