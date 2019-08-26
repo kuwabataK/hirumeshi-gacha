@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
 /**
  * ヘッダーに常に表示するAppBar
  */
-const ButtonAppBar = observer(() => {
+const ButtonAppBar = () => {
   const classes = useStyles();
 
   return (
@@ -65,6 +65,6 @@ const ButtonAppBar = observer(() => {
       </AppBar>
     </div>
   );
-})
+}
 
 export default ButtonAppBar

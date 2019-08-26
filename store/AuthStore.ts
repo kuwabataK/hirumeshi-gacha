@@ -7,19 +7,20 @@ export class AuthStore {
         this.checkLoginStatus()
     }
 
+    /**
+     * ログインユーザー
+     */
     @observable user: firebase.User | null = null
+
+
+    /**
+     * ログイン状態
+     */
     @observable loginStatus: 'login' | 'logout' | 'loading' = 'loading'
 
-    @action
-    setUser(user: firebase.User | null) {
-        this.user = user
-        if (user) {
-            this.loginStatus = 'login'
-        } else {
-            this.loginStatus = 'logout'
-        }
-    }
-
+    /**
+     * googleのアカウントでログインする
+     */
     @action
     async login() {
         this.checkLoginStatus()
@@ -28,6 +29,9 @@ export class AuthStore {
         await firebase.auth().signInWithRedirect(provider)
     }
 
+    /**
+     * ログアウトする
+     */
     @action
     async logout() {
         this.checkLoginStatus()
@@ -35,7 +39,27 @@ export class AuthStore {
         await firebase.auth().signOut()
     }
 
-    checkLoginStatus() {
+
+    /**
+     * firebaseのログイン状態に応じてログインユーザーを変更する
+     * 
+     * @param user 設定するユーザー
+     */
+    @action
+    private setUser(user: firebase.User | null) {
+        this.user = user
+        if (user) {
+            this.loginStatus = 'login'
+        } else {
+            this.loginStatus = 'logout'
+        }
+    }
+
+
+    /**
+     * ログイン状態の変更を監視するObserverをセット
+     */
+    private checkLoginStatus() {
         firebase.auth().onAuthStateChanged(user => {
             this.setUser(user)
         })
