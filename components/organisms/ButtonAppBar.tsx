@@ -15,7 +15,7 @@ type LoginButtonProps = {
   displayName: string | null
 }
 
-const LoginButton: React.FC<LoginButtonProps> = observer((props: LoginButtonProps) => {
+const LoginButton: React.FC<LoginButtonProps> = (props: LoginButtonProps) => {
 
   const login = () => {
     const provider = new firebase.auth.GoogleAuthProvider()
@@ -30,7 +30,7 @@ const LoginButton: React.FC<LoginButtonProps> = observer((props: LoginButtonProp
     return <Button color="inherit" onClick={logout} >{props.displayName} : Logout</Button>
   }
   return <Button color="inherit" onClick={login} >Login</Button>
-})
+}
 
 const useStyles = makeStyles(theme => ({
   root: {
