@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,14 +5,8 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import firebase from '../../utils/firebase';
 import store from '../../store/store';
 import { observer } from 'mobx-react-lite';
-
-type LoginButtonProps = {
-  isLogin: boolean
-  displayName: string | null
-}
 
 
 /**
@@ -21,31 +14,23 @@ type LoginButtonProps = {
  * 
  * @param props 
  */
-const LoginButton: React.FC<LoginButtonProps> = (props: LoginButtonProps) => {
-
-  /**
-   * ログイン状態の変化を監視する
-   */
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged(user => {
-      store.authStore.setUser(user)
-    })
-  })
+const LoginButton: React.FC = observer(() => {
 
   const login = () => {
-    const provider = new firebase.auth.GoogleAuthProvider()
-    firebase.auth().signInWithRedirect(provider)
+    store.authStore.login()
   }
 
   const logout = () => {
-    firebase.auth().signOut()
+    store.authStore.logout()
   }
 
-  if (props.isLogin) {
-    return <Button color="inherit" onClick={logout} >{props.displayName} : Logout</Button>
+  if (store.authStore.loginStatus === 'login') {
+    return <Button color="inherit" onClick={logout} >{store.authStore.user && store.authStore.user.displayName}</Button>
+  } else if (store.authStore.loginStatus === 'loading') {
+    return <Button color="inherit">Now Loading...</Button>
   }
   return <Button color="inherit" onClick={login} >Login</Button>
-}
+})
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -75,7 +60,7 @@ const ButtonAppBar = observer(() => {
           <Typography variant="h6" className={classes.title}>
             News
           </Typography>
-          <LoginButton displayName={store.authStore.user && store.authStore.user.displayName} isLogin={store.authStore.isLogin} ></LoginButton>
+          <LoginButton></LoginButton>
         </Toolbar>
       </AppBar>
     </div>
