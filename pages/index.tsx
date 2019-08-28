@@ -2,7 +2,7 @@ import * as React from 'react'
 import Link from 'next/link'
 import Layout from '../components/template/Layout'
 import { NextPage } from 'next'
-import { observer } from 'mobx-react';
+import { observer } from 'mobx-react'
 
 const IndexPage: NextPage = observer(() => {
   return (

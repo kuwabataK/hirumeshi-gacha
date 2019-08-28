@@ -1,21 +1,19 @@
-import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import store from '../../store/store';
-import { observer } from 'mobx-react-lite';
-
+import { makeStyles } from '@material-ui/core/styles'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import Button from '@material-ui/core/Button'
+import IconButton from '@material-ui/core/IconButton'
+import MenuIcon from '@material-ui/icons/Menu'
+import store from '../../store/store'
+import { observer } from 'mobx-react-lite'
 
 /**
  * ヘッダーに表示するログインボタン
- * 
- * @param props 
+ *
+ * @param props
  */
 const LoginButton: React.FC = observer(() => {
-
   const login = () => {
     store.authStore.login()
   }
@@ -25,11 +23,19 @@ const LoginButton: React.FC = observer(() => {
   }
 
   if (store.authStore.loginStatus === 'login') {
-    return <Button color="inherit" onClick={logout} >{store.authStore.user && store.authStore.user.displayName}</Button>
+    return (
+      <Button color="inherit" onClick={logout}>
+        {store.authStore.user && store.authStore.user.displayName}
+      </Button>
+    )
   } else if (store.authStore.loginStatus === 'loading') {
     return <Button color="inherit">Now Loading...</Button>
   }
-  return <Button color="inherit" onClick={login} >Login</Button>
+  return (
+    <Button color="inherit" onClick={login}>
+      Login
+    </Button>
+  )
 })
 
 /**
@@ -37,27 +43,32 @@ const LoginButton: React.FC = observer(() => {
  */
 const useStyles = makeStyles(theme => ({
   root: {
-    flexGrow: 1,
+    flexGrow: 1
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(2)
   },
   title: {
-    flexGrow: 1,
-  },
-}));
+    flexGrow: 1
+  }
+}))
 
 /**
  * ヘッダーに常に表示するAppBar
  */
 const ButtonAppBar = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
+          <IconButton
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
@@ -67,7 +78,7 @@ const ButtonAppBar = () => {
         </Toolbar>
       </AppBar>
     </div>
-  );
+  )
 }
 
 export default ButtonAppBar

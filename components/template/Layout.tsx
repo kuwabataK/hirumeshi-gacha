@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
-import ButtonAppBar from '../organisms/ButtonAppBar';
+import ButtonAppBar from '../organisms/ButtonAppBar'
 
 type Props = {
   title?: string
@@ -8,7 +8,7 @@ type Props = {
 
 const Layout: React.FunctionComponent<Props> = ({
   children,
-  title = 'This is the default title',
+  title = 'This is the default title'
 }) => (
   <div>
     <Head>
